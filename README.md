@@ -1,8 +1,3 @@
-# Wrangler
-
-```text
-
-
 
 ██      ██ ██████▒     ▒██▒    ███   ██    ▒████▒  ██        ████████  ██████▒
 ██░    ░██ ███████▓    ▓██▓    ███   ██   ▓██████  ██        ████████  ███████▓
@@ -16,11 +11,7 @@
  ███░░███  ██   ▒██  ▒██  ██▒  ██  ▒███  ▒██▒  ██  ██        ██        ██   ▒██
  ███  ███  ██    ██▒ ███  ███  ██   ███   ███████  ████████  ████████  ██    ██▒
  ▓██  ███  ██    ███ ██▒  ▒██  ██   ███    ▒████░  ████████  ████████  ██    ███
-
-
-
-```
-
+ 
 Wrangler is a Chrome extension for grabbing a UI component from the current
 page and handing it to an AI coding or computer-use agent.
 
