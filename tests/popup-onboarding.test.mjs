@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
-const popupHtml = readFileSync(join(rootDir, "popup.html"), "utf8");
-const popupSource = readFileSync(join(rootDir, "popup.js"), "utf8");
+const extensionDir = join(dirname(fileURLToPath(import.meta.url)), "..", "extension");
+const popupHtml = readFileSync(join(extensionDir, "popup.html"), "utf8");
+const popupSource = readFileSync(join(extensionDir, "popup.js"), "utf8");
 
 assert.match(
   popupHtml,

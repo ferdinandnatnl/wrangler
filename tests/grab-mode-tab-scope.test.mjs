@@ -4,10 +4,10 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
-const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
-const backgroundSource = readFileSync(join(rootDir, "background.js"), "utf8");
-const componentSource = readFileSync(join(rootDir, "component-grab.js"), "utf8");
-const popupSource = readFileSync(join(rootDir, "popup.js"), "utf8");
+const extensionDir = join(dirname(fileURLToPath(import.meta.url)), "..", "extension");
+const backgroundSource = readFileSync(join(extensionDir, "background.js"), "utf8");
+const componentSource = readFileSync(join(extensionDir, "component-grab.js"), "utf8");
+const popupSource = readFileSync(join(extensionDir, "popup.js"), "utf8");
 
 assert.match(
   backgroundSource,

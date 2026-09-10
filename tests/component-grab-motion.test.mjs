@@ -3,8 +3,8 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
-const source = readFileSync(join(rootDir, "component-grab.js"), "utf8");
+const extensionDir = join(dirname(fileURLToPath(import.meta.url)), "..", "extension");
+const source = readFileSync(join(extensionDir, "component-grab.js"), "utf8");
 
 assert.match(source, /function\s+extractMotionData\s*\(root\)/, "Grab mode should extract component motion data.");
 assert.match(source, /root\.getAnimations\(\{ subtree: true \}\)/, "JS and Web Animations API effects should be captured.");

@@ -17,14 +17,28 @@
 Wrangler is a Chrome extension for grabbing a UI component from the current
 page and handing it to an AI coding or computer-use agent.
 
+## Repository layout
+
+```text
+extension/              Chrome extension source (load this folder in Chrome)
+examples/blank-canvas/  Small local page for trying Grab Mode
+tests/                  Node-based regression tests
+```
+
 ## Quick start
 
 1. Open `chrome://extensions`.
 2. Turn on **Developer mode**.
-3. Choose **Load unpacked** and select this folder.
+3. Choose **Load unpacked** and select the `extension/` folder.
 4. Open a web page, open Wrangler, and turn on **Grab Mode**.
 5. Click a component or drag around it, then choose **Copy for Codex** or
    **Copy for Computer Use**.
+
+Run the regression tests from the repository root with:
+
+```bash
+node --test tests/*.test.mjs
+```
 
 Grab Mode is scoped to the current tab. Each copy action captures a screenshot
 and component JSON, then saves both files under:
