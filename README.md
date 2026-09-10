@@ -20,7 +20,11 @@ page and handing it to an AI coding or computer-use agent.
 ## Repository layout
 
 ```text
-extension/              Chrome extension source (load this folder in Chrome)
+background.js           Background service worker
+capture-core.js         Shared capture and prompt logic
+component-grab.js       In-page Grab Mode controller
+manifest.json           Chrome extension manifest
+popup.html / popup.js   Extension popup UI
 examples/blank-canvas/  Small local page for trying Grab Mode
 tests/                  Node-based regression tests
 ```
@@ -29,7 +33,7 @@ tests/                  Node-based regression tests
 
 1. Open `chrome://extensions`.
 2. Turn on **Developer mode**.
-3. Choose **Load unpacked** and select the `extension/` folder.
+3. Choose **Load unpacked** and select this repository folder.
 4. Open a web page, open Wrangler, and turn on **Grab Mode**.
 5. Click a component or drag around it, then choose **Copy for Codex** or
    **Copy for Computer Use**.

@@ -4,8 +4,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
-const extensionDir = join(dirname(fileURLToPath(import.meta.url)), "..", "extension");
-const backgroundSource = readFileSync(join(extensionDir, "background.js"), "utf8");
+const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
+const backgroundSource = readFileSync(join(rootDir, "background.js"), "utf8");
 
 assert.equal(
   (backgroundSource.match(/function\s+captureVisiblePromise\s*\(/g) || []).length,
