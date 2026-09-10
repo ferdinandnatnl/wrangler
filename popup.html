@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 320px;
+      padding: 20px;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #111827;
+      background-color: #f8fafc;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+    .intro {
+      margin: 0 0 20px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.45;
+      text-align: left;
+    }
+    button {
+      background-color: #3b82f6; /* Tailwind Blue 500 */
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 12px;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #2563eb; /* Tailwind Blue 600 */
+    }
+    button:disabled {
+      background-color: #93c5fd; /* Tailwind Blue 300 */
+      cursor: default;
+    }
+    .comingSoonButton {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
+      margin-bottom: 10px;
+      background: #e2e8f0;
+      color: #64748b;
+      text-align: left;
+      cursor: not-allowed;
+    }
+    .comingSoonButton:hover,
+    .comingSoonButton:disabled {
+      background: #e2e8f0;
+      color: #64748b;
+    }
+    .comingSoonBadge {
+      flex: 0 0 auto;
+      padding: 3px 6px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      color: #475569;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    #status {
+      font-size: 12px;
+      color: #6b7280;
+      min-height: 34px;
+      line-height: 1.4;
+      text-align: left;
+    }
+    /* Simple styling for manual copy textarea */
+    #manualCopyArea {
+      margin-top: 12px;
+      width: calc(100% - 16px);
+      height: 130px;
+      font-size: 11px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #d1d5db;
+      resize: vertical;
+    }
+    .success {
+      color: #10b981 !important; /* Tailwind Emerald 500 */
+      font-weight: 500;
+    }
+    .error {
+      color: #ef4444 !important; /* Tailwind Red 500 */
+    }
+    .onboarding {
+      display: grid;
+      gap: 16px;
+      text-align: left;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .stepNumber {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #dbeafe;
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .stepBody {
+      min-width: 0;
+      flex: 1;
+    }
+    .stepHeader {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .stepTitle {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+    .stepMeta {
+      margin: 2px 0 0;
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 1.3;
+    }
+    .stepText {
+      margin: 6px 0 0;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .stepText strong {
+      color: #334155;
+      font-weight: 650;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 30px;
+      flex: 0 0 auto;
+    }
+    .switch input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .slider {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      inset: 0;
+      color: #a7a7a7;
+      background: #161616;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 13px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+      transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), color 150ms ease, box-shadow 150ms ease;
+    }
+    .slider svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+    .slider:after {
+      position: absolute;
+      content: "";
+      width: 5px;
+      height: 5px;
+      right: 5px;
+      top: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 2px #161616;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 150ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .switch:hover .slider {
+      transform: scale(1.05);
+    }
+    input:checked + .slider {
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+    input:checked + .slider:after {
+      opacity: 1;
+      transform: scale(1);
+    }
+    input:focus-visible + .slider {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+    }
+    .switch:active .slider {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body>
+  <h2>Wrangler</h2>
+  <p class="intro">Capture a UI component and hand it to your AI agent.</p>
+
+  <section class="onboarding" aria-label="How to use Wrangler">
+    <div class="step">
+      <span class="stepNumber" aria-hidden="true">1</span>
+      <div class="stepBody">
+        <div class="stepHeader">
+          <div>
+            <h3 class="stepTitle">Turn on Grab Mode</h3>
+            <p class="stepMeta">For this tab only</p>
+          </div>
+          <label class="switch">
+            <input id="grabToggle" type="checkbox" aria-label="Turn on Grab Mode for this tab">
+            <span class="slider" aria-hidden="true">
+              <svg viewBox="0 0 16 16">
+                <path d="M3.05 1.55 12.8 8.1a.65.65 0 0 1-.26 1.18l-3.43.6-1.73 3.02a.65.65 0 0 1-1.18-.14L2.04 2.27a.65.65 0 0 1 1.01-.72Z" fill="currentColor"/>
+              </svg>
+            </span>
+          </label>
+        </div>
+        <p class="stepText">Then click a part, or drag around a whole component, to open the Copy menu.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="stepNumber" aria-hidden="true">2</span>
+      <div class="stepBody">
+        <h3 class="stepTitle">Choose how to hand it off</h3>
+        <p class="stepText">Use <strong>Copy for Codex</strong> or <strong>Copy for Computer Use</strong>. Your screenshot and component JSON are saved automatically for reference.</p>
+      </div>
+    </div>
+  </section>
+
+  <button id="extractBtn" class="comingSoonButton" type="button" disabled aria-disabled="true" title="Multi-Capture + Full Extract is coming soon">
+    <span>Multi-Capture + Full Extract</span>
+    <span class="comingSoonBadge">Coming soon</span>
+  </button>
+  <button id="copyPromptBtn" style="display:none;">Copy Prompt</button>
+  <div id="status" aria-live="polite">Step 1: Turn on Grab Mode to begin.</div>
+  
+  <textarea id="manualCopyArea" style="display:none;" readonly></textarea>
+  
+  <!-- We load vanilla JS here so it works immediately without Vite/Webpack -->
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Wrangler",
+  "version": "1.0",
+  "description": "Extracts DOM/CSS and downloads a screenshot of the page.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "downloads",
+    "clipboardWrite",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "component-grab.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Build production-grade applications with a Postgres database, Authentication, instant APIs, Realtime, Functions, Storage and Vector embeddings. Start for free."
+    />
+    <title>Supabase | The Postgres Development Platform.</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-bg"></div>
+      <nav class="nav-shell" aria-label="Main navigation">
+        <a class="brand-link" href="#" aria-label="Supabase home">
+          <svg class="brand-logo" viewBox="0 0 124 24" role="img" aria-label="Supabase Logo">
+            <path class="mark-a" d="M12.1 1.6c.6-1.1 2.2-.7 2.2.6v8.3h7.1c1.3 0 1.9 1.6.9 2.5L10.8 23c-.7.6-1.8.1-1.8-.9v-8.6H1.8c-1.3 0-1.8-1.6-.9-2.5L12.1 1.6Z" />
+            <path class="mark-b" d="M14.3 2.2v8.3H21c.7 0 1 .8.5 1.3L9 22.1v-8.6H2.1c-.7 0-1-.8-.5-1.3L14.3 2.2Z" />
+            <text x="33" y="18" class="brand-word">supabase</text>
+          </svg>
+        </a>
+
+        <div class="nav-links">
+          <div class="nav-item">
+            <button type="button">Product <span>v</span></button>
+            <div class="mega-menu">
+              <a href="#">Database</a>
+              <a href="#">Auth</a>
+              <a href="#">Storage</a>
+              <a href="#">Edge Functions</a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <button type="button">Developers <span>v</span></button>
+            <div class="mega-menu">
+              <a href="#">Documentation</a>
+              <a href="#">Supabase UI</a>
+              <a href="#">Changelog</a>
+              <a href="#">Integrations</a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <button type="button">Solutions <span>v</span></button>
+            <div class="mega-menu">
+              <a href="#">AI Builders</a>
+              <a href="#">Startups</a>
+              <a href="#">Enterprise</a>
+              <a href="#">Agencies</a>
+            </div>
+          </div>
+          <a href="#">Pricing</a>
+          <a href="#">Docs</a>
+          <a href="#">Blog</a>
+        </div>
+
+        <button class="theme-toggle" type="button" aria-label="Toggle theme">
+          <span></span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <div class="hero-inner">
+          <h1>
+            <span>Build in a weekend</span>
+            <span>Scale to millions</span>
+          </h1>
+          <p>
+            Supabase is the Postgres development platform.<br />
+            Start your project with a Postgres database, Authentication, instant APIs, Edge
+            Functions, Realtime subscriptions, Storage, and Vector embeddings.
+          </p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="#">Start your project</a>
+            <a class="btn btn-secondary" href="#">Request a demo</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="logo-strip" aria-label="Trusted companies">
+        <div class="logo-mask">
+          <div class="logo-track" id="publicityLogos"></div>
+        </div>
+        <p>Trusted by fast-growing companies worldwide</p>
+      </section>
+
+      <section class="products-section">
+        <div class="products-grid" id="productsGrid"></div>
+        <p class="products-note"><span>Use one or all.</span> Best of breed products. Integrated as a platform.</p>
+      </section>
+
+      <section class="frameworks-section" id="frameworks">
+        <div class="frameworks-inner">
+          <h2>Use Supabase with <span>any framework</span></h2>
+          <div class="framework-grid" id="frameworkGrid"></div>
+        </div>
+      </section>
+
+      <section class="customers-section" id="customers">
+        <div class="customers-heading">
+          <div>
+            <span class="eyebrow">Customer Stories</span>
+            <h2>Trusted by the world's <span>most innovative companies.</span></h2>
+            <p>See how Supabase empowers companies of all sizes to accelerate their growth and streamline their work.</p>
+          </div>
+          <div class="small-actions">
+            <a class="small-btn green" href="#">View all stories</a>
+            <a class="small-btn" href="#">View events</a>
+          </div>
+        </div>
+        <div class="customer-rail" id="customerRail"></div>
+      </section>
+
+      <section class="examples-section" id="examples">
+        <h2>Start building in seconds</h2>
+        <p>Kickstart your next project with templates built by us and our community.</p>
+        <div class="button-row">
+          <a class="btn btn-secondary" href="#">View all examples</a>
+          <a class="btn btn-secondary with-icon" href="#">
+            <span class="github-dot"></span>
+            Official GitHub library
+          </a>
+        </div>
+      </section>
+
+      <section class="templates-section">
+        <div class="templates-grid" id="templatesGrid"></div>
+      </section>
+
+      <section class="dashboard-section" id="dashboard">
+        <h2>
+          <span>Stay productive and manage your app</span><br />
+          without leaving the dashboard
+        </h2>
+        <div class="tabs" role="tablist" aria-label="Dashboard tools">
+          <button class="active" type="button">Table Editor</button>
+          <button type="button">SQL Editor</button>
+          <button type="button">RLS Policies</button>
+        </div>
+        <ul class="feature-list">
+          <li>Full CRUD</li>
+          <li>Materialized Views</li>
+          <li>Foreign Tables</li>
+          <li>Partitioned Tables</li>
+          <li>Easy as a spreadsheet</li>
+        </ul>
+        <div class="dashboard-frame">
+          <div class="browser-dots"><span></span><span></span><span></span></div>
+          <div class="dashboard-image-wrap">
+            <img
+              src="https://supabase.com/_next/image?url=%2Fimages%2Findex%2Fdashboard%2Fsupabase-table-editor-light.png&w=3840&q=75"
+              alt="Supabase dashboard table editor"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="community-heading">
+        <h2>Join the community</h2>
+        <p>Discover what our community has to say about their Supabase experience.</p>
+        <a class="btn btn-secondary with-icon" href="#"><span class="discord-dot"></span>Join us on Discord</a>
+      </section>
+
+      <section class="tweets-section">
+        <div class="tweets-grid" id="tweetsGrid"></div>
+        <div class="tweet-fade"></div>
+      </section>
+
+      <section class="open-source-section">
+        <h2>Open source from day one</h2>
+        <p>
+          Supabase is built in the open because we believe great developer tools should be
+          transparent, inspectable, and owned by the community. Read, contribute, self-host.
+          You're never locked in, and always in control.
+        </p>
+        <a class="github-badge" href="#">
+          <span class="github-dot"></span>
+          <strong>@supabase</strong>
+          <span class="divider"></span>
+          <strong>103.9K</strong>
+        </a>
+        <span class="repo-caption">Top 100 GitHub repos</span>
+      </section>
+
+      <section class="final-cta">
+        <h2><span>Build in a weekend,</span> scale to millions</h2>
+        <div class="button-row">
+          <a class="btn btn-primary" href="#">Start your project</a>
+          <a class="btn btn-secondary" href="#">Request a demo</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <section class="security-strip">
+        <p>We protect your data. <a href="#">More on Security</a></p>
+        <ul>
+          <li>SOC2 Type 2 <span>Certified</span></li>
+          <li>HIPAA <span>Compliant</span></li>
+          <li>ISO 27001 <span>Certified</span></li>
+        </ul>
+      </section>
+      <div class="footer-body">
+        <div class="footer-brand">
+          <svg class="footer-logo" viewBox="0 0 160 30" role="img" aria-label="Supabase Logo">
+            <path class="mark-a" d="M15 1.8c.8-1.4 2.8-.9 2.8.7v10.4h8.8c1.6 0 2.3 2 .9 3.1L13.6 28.8c-.9.8-2.3.1-2.3-1.1V17H2.4c-1.6 0-2.3-2-.9-3.1L15 1.8Z" />
+            <path class="mark-b" d="M17.8 2.5v10.4h8.4c.8 0 1.2 1 .6 1.6L11.3 27.7V17H2.7c-.8 0-1.2-1-.6-1.6L17.8 2.5Z" />
+            <text x="42" y="23" class="brand-word footer-word">supabase</text>
+          </svg>
+          <div class="socials">
+            <a href="#">X</a>
+            <a href="#">GH</a>
+            <a href="#">DC</a>
+            <a href="#">YT</a>
+            <a href="#">TT</a>
+            <a href="#">IG</a>
+          </div>
+          <p>Get product updates and news from Supabase.</p>
+          <form>
+            <input type="email" placeholder="Your email" aria-label="Your email" />
+            <button type="button">Subscribe</button>
+          </form>
+        </div>
+        <nav class="footer-columns" id="footerColumns" aria-label="Footer"></nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; Supabase Inc</span>
+        <button type="button" aria-label="System theme">☼</button>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

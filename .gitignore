@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+dist
+.env
+.claude
+output
+text_nodes.txt
+extracted.md
+*.log
+
+# Local Wrangler captures can contain private page content and third-party assets.
+wrangler-capture-history/
