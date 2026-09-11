@@ -35,8 +35,10 @@ tests/                  Node-based regression tests
 2. Turn on **Developer mode**.
 3. Choose **Load unpacked** and select this repository folder.
 4. Open a web page, open Wrangler, and turn on **Grab Mode**.
-5. Click a component or drag around it, then choose **Copy for Codex** or
-   **Copy for Computer Use**.
+5. Click a component or drag around it, then choose **Copy for Codex**, **Copy
+   for Computer Use**, or **Copy Design System**. The design-system option asks
+   you to name the component (for example, `button`) before copying a prompt to
+   create or update the current project's design system.
 
 Run the regression tests from the repository root with:
 
@@ -61,6 +63,9 @@ time it is used. No separate folder or AI-agent setup is required.
   ready-to-use handoff prompt.
 - **Copy for Computer Use** — saves the same references and copies a prompt
   for locating the component in the live browser.
+- **Copy Design System** — asks for the component role, saves the same
+  references, and copies a prompt to create or update the current project's
+  reusable design-system component and tokens.
 - **Multi-Capture + Full Extract** — coming soon.
 
 ## Known limitations

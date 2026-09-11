@@ -26,8 +26,8 @@ assert.match(
 
 assert.match(
   source,
-  /const target = selectedEl \|\| hoveredEl;\s+hideMenu\(\);[\s\S]*?extractComponentData\(target\)/,
-  "Menu actions should continue using the component that opened the menu."
+  /const target = selectedEl \|\| hoveredEl;[\s\S]*?if \(action === "copy-design-system"\) \{\s+showDesignSystemPrompt\(target\);\s+return;\s+\}[\s\S]*?hideMenu\(\);[\s\S]*?extractComponentData\(target\)/,
+  "Menu actions should continue using the component that opened the menu, while the design-system form keeps it selected."
 );
 
 assert.match(
