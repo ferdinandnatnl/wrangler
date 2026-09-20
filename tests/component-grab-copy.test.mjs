@@ -32,7 +32,7 @@ assert.equal(
 
 assert.match(
   source,
-  /createMenuButton\("copy-hover-animations",\s*"Copy Hover Animations",\s*"Hover every element \+ copy motion prompt", true\)/,
+  /createMenuButton\("copy-hover-animations",\s*"Copy Hover Animations",\s*"Hover every element \+ screenshot each state", true\)/,
   "The component menu should expose a computer-use hover-animation prompt as its fourth action."
 );
 
@@ -72,6 +72,11 @@ for (const promptDetail of [
   "move across its visible text, icon, SVG, and child hit areas",
   "Move the pointer away after each target",
   "Do not click, type, submit forms, navigate",
+  "HOVER SCREENSHOT REFERENCE SET",
+  "take a fresh screenshot with computer-use",
+  "Keep one screenshot for each distinct hover state",
+  "hover-states",
+  "complete screenshot set alongside the component JSON",
 ]) {
   assert.match(
     source,

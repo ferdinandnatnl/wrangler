@@ -158,7 +158,7 @@
     createMenuButton("copy-for-codex", "Copy for Codex", "Save reference + copy ready prompt"),
     createMenuButton("copy-computer-use", "Copy for Computer Use", "Save reference + locate in browser"),
     createMenuButton("copy-design-system", "Copy Design System", "Describe the component + copy system prompt"),
-    createMenuButton("copy-hover-animations", "Copy Hover Animations", "Hover every element + copy motion prompt", true),
+    createMenuButton("copy-hover-animations", "Copy Hover Animations", "Hover every element + screenshot each state", true),
   ];
   menuButtons.forEach((button) => menu.appendChild(button));
 
@@ -1664,14 +1664,22 @@ HOVER TARGET INVENTORY (starting points; still visually inspect the live page):
 ${hoverTargetInventory}
 \`\`\`
 
+HOVER SCREENSHOT REFERENCE SET
+The default component screenshot above is only the baseline. Every time a real hover produces a new or materially different interface or visual state, immediately take a fresh screenshot with computer-use after the state settles. This includes changed controls, revealed tooltips, menus, popovers, overlays, expanded content, and distinct nested or group/peer states.
+- Capture the full selected component and any newly revealed interface together so their relationship is clear.
+- Keep one screenshot for each distinct hover state; if a later target produces the same state, reuse the existing reference instead of duplicating it.
+- Label each capture with the trigger and state, for example \`hover-01-card-action-menu\` or \`hover-02-icon-tooltip\`, and keep the captures available as visual references while implementing.
+- If the environment supports saving screenshots to disk, save them under ~/Downloads/${exportInfo.relativeDirectory}/hover-states/ without overwriting the default screenshot. Otherwise, keep each computer-use screenshot in the task's visual context and refer to it by its label.
+- At the end, review the complete screenshot set alongside the component JSON before coding. The screenshot set is part of the reference material, not just a debugging aid.
+
 COMPUTER-USE WORKFLOW
 1. Open or switch to the exact page URL and locate the selected component using the label, screenshot, and captured rectangle. Account for browser chrome, scroll, zoom, and responsive reflow. Ignore the Wrangler overlay if it is visible.
 2. Move the pointer to a neutral location outside the component so you have a true default state.
 3. For each inventory target, use real pointer movement with computer-use to hover its center. Also move across its visible text, icon, SVG, and child hit areas when those are distinct; do not assume hovering the parent covers every nested interaction.
-4. Pause long enough for the transition or keyframe to run. Observe color, background, opacity, transform, scale, shadow, border, underline, cursor, tooltips, dropdowns, and any other visual or positional change. Note the duration, delay, easing, direction, iteration, and trigger when they are observable.
+4. Pause long enough for the transition or keyframe to run. Observe color, background, opacity, transform, scale, shadow, border, underline, cursor, tooltips, dropdowns, and any other visual or positional change. If this hover creates a new or materially different state, take and label its screenshot now. Note the duration, delay, easing, direction, iteration, and trigger when they are observable.
 5. Move the pointer away after each target to confirm the exit animation and restore the default state before testing the next target. If a hover reveals new content, recursively hover every meaningful visible item in that content as well.
 6. Do not click, type, submit forms, navigate, or otherwise activate controls unless a hover state cannot be inspected without an explicitly safe interaction. This task is about hover behavior and must avoid changing page data.
-7. Compare each default/hover pair with the screenshot and the captured JSON. Inspect the page's CSS or accessibility tree when useful, but do not replace live computer-use hovering with guessed selectors or synthetic DOM events.
+7. Compare every captured hover screenshot with the baseline, the other hover screenshots, and the captured JSON. Inspect the page's CSS or accessibility tree when useful, but do not replace live computer-use hovering with guessed selectors or synthetic DOM events.
 
 IMPLEMENTATION REQUIREMENTS
 - Implement the observed hover behavior, not a written approximation: reproduce each trigger, changed property, transition/keyframe, revealed element, and exit behavior in the current project.
