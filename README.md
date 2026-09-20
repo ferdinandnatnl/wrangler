@@ -36,9 +36,11 @@ tests/                  Node-based regression tests
 3. Choose **Load unpacked** and select this repository folder.
 4. Open a web page, open Wrangler, and turn on **Grab Mode**.
 5. Click a component or drag around it, then choose **Copy for Codex**, **Copy
-   for Computer Use**, or **Copy Design System**. The design-system option asks
-   you to name the component (for example, `button`) before copying a prompt to
-   create or update the current project's design system.
+   for Computer Use**, **Copy Design System**, or **Copy Hover Animations**. The
+   design-system option asks you to name the component (for example, `button`)
+   before copying a prompt to create or update the current project's design
+   system. The hover-animation option asks computer-use to hover every visible
+   element in the selected component and inspect the resulting motion.
 
 Run the regression tests from the repository root with:
 
@@ -65,7 +67,12 @@ time it is used. No separate folder or AI-agent setup is required.
   for locating the component in the live browser.
 - **Copy Design System** — asks for the component role, saves the same
   references, and copies a prompt to create or update the current project's
-  reusable design-system component and tokens.
+  reusable design-system component and tokens. The receiving coding agent also
+  reads and maintains the project-root `design_system.md` record so later
+  captures of the same role reuse the existing component.
+- **Copy Hover Animations** — saves the same references and copies a
+  computer-use prompt that systematically hovers the selected component and
+  its visible descendants to discover and reproduce hover motion.
 - **Multi-Capture + Full Extract** — coming soon.
 
 ## Known limitations

@@ -20,14 +20,20 @@ assert.match(
 
 assert.match(
   source,
-  /createMenuButton\("copy-design-system",\s*"Copy Design System",\s*"Describe the component \+ copy system prompt", true\)/,
+  /createMenuButton\("copy-design-system",\s*"Copy Design System",\s*"Describe the component \+ copy system prompt"\)/,
   "The component menu should expose a design-system prompt as its third action."
 );
 
 assert.equal(
   (source.match(/createMenuButton\("/g) || []).length,
-  3,
-  "The component menu should contain the three intentional actions."
+  4,
+  "The component menu should contain the four intentional actions."
+);
+
+assert.match(
+  source,
+  /createMenuButton\("copy-hover-animations",\s*"Copy Hover Animations",\s*"Hover every element \+ copy motion prompt", true\)/,
+  "The component menu should expose a computer-use hover-animation prompt as its fourth action."
 );
 
 for (const obsoleteAction of [
@@ -54,6 +60,26 @@ assert.match(
   "The browser-location action should build a dedicated prompt."
 );
 
+assert.match(
+  source,
+  /function buildHoverAnimationsPrompt\(data, exportInfo\)\s*\{/,
+  "The hover-animation action should build a dedicated computer-use prompt."
+);
+
+for (const promptDetail of [
+  "Use computer-use to discover and reproduce every hover animation",
+  "Actually use computer-use to move the pointer over everything visible inside the selected component",
+  "move across its visible text, icon, SVG, and child hit areas",
+  "Move the pointer away after each target",
+  "Do not click, type, submit forms, navigate",
+]) {
+  assert.match(
+    source,
+    new RegExp(promptDetail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `The hover-animation prompt should include ${promptDetail}`
+  );
+}
+
 for (const promptDetail of [
   "Use computer-use to locate and inspect this UI component directly in the browser.",
   "Page URL:",
@@ -74,6 +100,12 @@ assert.match(
   source,
   /if \(action === "copy-computer-use"\) \{\s+const exportInfo = await saveCaptureReference\(data\);\s+await copyJsonText\(buildComputerUsePrompt\(data, exportInfo\)\);/,
   "The browser-location action should save the reference and copy the generated prompt as text."
+);
+
+assert.match(
+  source,
+  /if \(action === "copy-hover-animations"\) \{\s+const exportInfo = await saveCaptureReference\(data\);\s+await copyJsonText\(buildHoverAnimationsPrompt\(data, exportInfo\)\);/,
+  "The hover-animation action should save the reference and copy the generated computer-use prompt as text."
 );
 
 assert.match(
