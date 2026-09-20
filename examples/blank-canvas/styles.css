@@ -28,7 +28,7 @@ body {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   color: rgb(21, 21, 21);
   font-family: -apple-system, BlinkMacSystemFont, "Apple Color Emoji", Inter, Roboto, "Segoe UI", sans-serif;
   line-height: 24px;
@@ -380,7 +380,8 @@ svg {
 
 .page-content {
   width: 1464px;
-  height: 2128.98px;
+  height: auto;
+  min-height: 2128.98px;
   padding: 53px 0 0;
   color: rgb(21, 21, 21);
   font-family: -apple-system, BlinkMacSystemFont, "Apple Color Emoji", Inter, Roboto, "Segoe UI", sans-serif;
@@ -425,7 +426,7 @@ svg {
 }
 
 .content {
-  height: 1792.38px;
+  height: auto;
   padding: 16px;
   overflow: visible;
 }
@@ -1100,5 +1101,190 @@ svg {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Keep the legacy desktop fixture accurate while allowing the design-system
+   preview to be reviewed at real phone widths. */
+@media (max-width: 900px) {
+  #app {
+    min-width: 320px;
+  }
+
+  body::before {
+    width: 100%;
+  }
+
+  .page-shell,
+  .page-content,
+  .global-footer,
+  .nav-wrapper,
+  .navbar {
+    width: 100%;
+  }
+
+  .page-shell {
+    min-height: 100dvh;
+  }
+
+  .nav-wrapper {
+    height: calc(52px + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .page-content {
+    height: auto;
+    padding-top: calc(53px + env(safe-area-inset-top));
+  }
+
+  .center-and-right {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+  }
+
+  .center-wrapper {
+    display: none;
+  }
+
+  .right-wrapper {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  .nav-time,
+  .create-button {
+    display: none;
+  }
+
+  .zm-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .page-header {
+    width: 100%;
+    height: auto;
+    padding: 44px 16px 0;
+  }
+
+  .header-row,
+  .page-header h1 {
+    width: 100%;
+    height: auto;
+  }
+
+  .discover-description {
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    width: 100%;
+    height: auto;
+  }
+
+  .discover-section,
+  .popular-section,
+  .category-section,
+  .calendar-section,
+  .explore-section {
+    width: 100%;
+    height: auto;
+  }
+
+  .section-title-wrapper,
+  .section-title-row,
+  .event-grid-wrapper,
+  .event-grid,
+  .category-grid-wrapper,
+  .category-grid,
+  .calendar-grid-wrapper,
+  .calendar-grid,
+  .tabs,
+  .city-grid-wrapper,
+  .city-grid {
+    width: 100%;
+  }
+
+  .section-title-wrapper,
+  .section-title-row,
+  .event-grid-wrapper,
+  .event-grid,
+  .category-grid-wrapper,
+  .category-grid,
+  .calendar-grid-wrapper,
+  .calendar-grid,
+  .city-grid-wrapper,
+  .city-grid {
+    height: auto;
+  }
+
+  .popular-section .section-title-wrapper,
+  .popular-section .section-title-row {
+    height: auto;
+  }
+
+  .event-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+
+  .event-row {
+    width: calc(100% + 16px);
+  }
+
+  .event-info {
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  .category-grid,
+  .calendar-grid,
+  .city-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+
+  .discover-category,
+  .calendar-card,
+  .place-item {
+    width: 100%;
+  }
+
+  .calendar-card {
+    height: auto;
+    min-height: 159.398px;
+  }
+
+  .calendar-top,
+  .calendar-info {
+    width: 100%;
+  }
+
+  .tabs {
+    overflow-x: auto;
+  }
+
+  .city-inner {
+    width: 100%;
+  }
+
+  .footer-container,
+  .global-footer-content {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer-container {
+    padding: 32px 16px;
+  }
+
+  .global-footer {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .global-footer-content {
+    margin: 16px 0 0;
   }
 }

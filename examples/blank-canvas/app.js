@@ -1,4 +1,5 @@
 const { createElement: h, useState } = React;
+const { ChatbotInput } = window.BlankCanvasDesignSystem;
 
 const eventData = [
   {
@@ -262,6 +263,79 @@ function Navbar() {
   );
 }
 
+function DesignSystemPreview() {
+  const [submittedMessage, setSubmittedMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+
+  function handleSubmit(message) {
+    setSubmittedMessage(message.trim() || "Empty message");
+    setIsSending(true);
+    window.setTimeout(() => setIsSending(false), 700);
+  }
+
+  return h(
+    "section",
+    { className: "design-system-section", "aria-labelledby": "design-system-chatbot-title" },
+    h(
+      "div",
+      { className: "design-system-section__heading" },
+      h(
+        "div",
+        null,
+        h("p", { className: "design-system-section__eyebrow" }, "Design system"),
+        h("h2", { className: "design-system-section__title", id: "design-system-chatbot-title" }, "Chatbot input"),
+      ),
+      h("p", { className: "design-system-section__caption" }, "A reusable prompt field with a compact submit affordance, captured from the Mistral Vibe experience."),
+    ),
+    h(
+      "div",
+      { className: "design-system-demo" },
+      h(
+        "div",
+        { className: "design-system-demo__primary" },
+        h(ChatbotInput, {
+          placeholder: "Ask me anything...",
+          onSubmit: handleSubmit,
+          submitLabel: "Send message",
+        }),
+      ),
+      h(
+        "p",
+        { className: "design-system-demo__status", "aria-live": "polite" },
+        isSending ? "Sending your message…" : submittedMessage ? `Submitted: ${submittedMessage}` : "Try the empty, filled, and focus states.",
+      ),
+    ),
+    h(
+      "div",
+      { className: "design-system-states", "aria-label": "Chatbot input state examples" },
+      h(
+        "div",
+        { className: "design-system-state" },
+        h("span", { className: "design-system-state__label" }, "Filled"),
+        h(ChatbotInput, { defaultValue: "Brief me on my next meeting.", label: "Filled chat message" }),
+      ),
+      h(
+        "div",
+        { className: "design-system-state" },
+        h("span", { className: "design-system-state__label" }, "Loading"),
+        h(ChatbotInput, { defaultValue: "Preparing a response…", label: "Loading chat message", loading: true }),
+      ),
+      h(
+        "div",
+        { className: "design-system-state" },
+        h("span", { className: "design-system-state__label" }, "Error"),
+        h(ChatbotInput, { defaultValue: "Try sending again", label: "Chat message with error", errorMessage: "Message could not be sent." }),
+      ),
+      h(
+        "div",
+        { className: "design-system-state" },
+        h("span", { className: "design-system-state__label" }, "Disabled"),
+        h(ChatbotInput, { placeholder: "Chat is unavailable", label: "Disabled chat message", disabled: true }),
+      ),
+    ),
+  );
+}
+
 function SectionHeading({ children, subtitle, action }) {
   return h("div", { className: "section-title-wrapper medium" }, h("div", { className: "section-title-row flex-center spread gap-2" },
     h("h2", { className: `section-title${subtitle ? " section-title-with-subtitle" : ""}` }, subtitle ? [h("div", { key: "title" }, children), h("div", { key: "subtitle", className: "section-subtitle text-tertiary-alpha fw-regular" }, subtitle)] : children),
@@ -345,7 +419,7 @@ function DiscoverPage() {
   return h("div", { className: "page-shell" }, h(Navbar), h("main", { className: "page-content sticky-topnav", "data-component": "div.jsx-4084343657" },
     h("div", { className: "page-header zm-container px-3" }, h("div", { className: "header-row flex-center mb-2 gap-2" }, h("h1", { className: "tab-title flex-1" }, "Discover Events")), h("div", null)),
     h("div", { className: "discover-description zm-container px-3 text-secondary-alpha pt-2 pb-4 mb-2" }, "Explore popular events near you, browse by category, or check out some of the great community calendars."),
-    h("div", { className: "content zm-container" }, h(PopularEvents), h(BrowseCategories), h(FeaturedCalendars), h(ExploreLocalEvents)),
+    h("div", { className: "content zm-container" }, h(DesignSystemPreview), h(PopularEvents), h(BrowseCategories), h(FeaturedCalendars), h(ExploreLocalEvents)),
     h(GlobalFooter),
   ));
 }
