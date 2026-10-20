@@ -1986,8 +1986,22 @@ Start by inspecting the current project and the two reference files, then create
     showMenu(e.clientX, e.clientY);
   }
 
+  function stopCapturedPageEvent(e) {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  }
+
+  function isPointInsideElement(el, x, y) {
+    const rect = el.getBoundingClientRect();
+    return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+  }
+
   function onClick(e) {
-    if (e.button !== 0) return;
+    if (host.contains(e.target)) {
+      handleHostClick(e);
+      return;
+    }
+    if (!enabled || e.button !== 0) return;
     if (suppressNextPageClick) {
       suppressNextPageClick = false;
       e.preventDefault();
@@ -1999,11 +2013,44 @@ Start by inspecting the current project and the two reference files, then create
   }
 
   function onContextMenu(e) {
+    if (host.contains(e.target)) {
+      e.preventDefault();
+      stopCapturedPageEvent(e);
+      return;
+    }
     openMenuForEvent(e);
   }
 
+  function onPointerDown(e) {
+    if (host.contains(e.target)) {
+      if (isPointInsideElement(dockSwitch, e.clientX, e.clientY)) {
+        onDockPointerDown(e);
+      } else if (menuVisible && isPointInsideElement(designSystemInput, e.clientX, e.clientY)) {
+        designSystemInput.focus({ preventScroll: true });
+      }
+      stopCapturedPageEvent(e);
+      return;
+    }
+    if (!enabled) return;
+
+    // Page popovers often dismiss on pointerdown, before the click handler can
+    // select the still-open content. Keep that event inside Grab Mode.
+    stopCapturedPageEvent(e);
+  }
+
   function onMouseDown(e) {
-    if (!enabled || e.button !== 0 || host.contains(e.target)) return;
+    if (host.contains(e.target)) {
+      e.preventDefault();
+      stopCapturedPageEvent(e);
+      return;
+    }
+    if (!enabled) return;
+
+    // Also block mouse handlers for pages that dismiss menus on mousedown.
+    e.preventDefault();
+    stopCapturedPageEvent(e);
+    if (e.button !== 0) return;
+
     if (menuVisible) hideMenu();
     lastPointer = { x: e.clientX, y: e.clientY };
     marqueeDrag = {
@@ -2015,13 +2062,36 @@ Start by inspecting the current project and the two reference files, then create
     };
   }
 
+  function onPointerMove(e) {
+    if (!dockDrag || e.pointerId !== dockDrag.pointerId) return;
+    onDockPointerMove(e);
+    stopCapturedPageEvent(e);
+  }
+
+  function onPointerUp(e) {
+    if (dockDrag && e.pointerId === dockDrag.pointerId) {
+      finishDockDrag(e);
+      stopCapturedPageEvent(e);
+      return;
+    }
+    if (enabled || host.contains(e.target)) stopCapturedPageEvent(e);
+  }
+
   function onMouseUp(e) {
+    if (host.contains(e.target)) {
+      stopCapturedPageEvent(e);
+      return;
+    }
+    if (!enabled) return;
     if (!marqueeDrag || e.button !== 0) return;
     const drag = marqueeDrag;
     marqueeDrag = null;
     hideMarquee();
     restorePageTextSelection();
-    if (!drag.active) return;
+    if (!drag.active) {
+      stopCapturedPageEvent(e);
+      return;
+    }
 
     e.preventDefault();
     e.stopPropagation();
@@ -2037,6 +2107,53 @@ Start by inspecting the current project and the two reference files, then create
     } else {
       showToast("No component matched that box. Try drawing closer to its edges.", true);
       refreshHoverFromPointer();
+    }
+  }
+
+  function toggleGrabMode() {
+    if (suppressNextDockClick) {
+      suppressNextDockClick = false;
+      return;
+    }
+    const next = !enabled;
+    setEnabled(next);
+    void persistMode(next);
+  }
+
+  function handleHostClick(e) {
+    // The closed shadow root retargets these clicks to the host. Handle them
+    // before the page's outside-click listeners can dismiss its open popover.
+    e.preventDefault();
+    stopCapturedPageEvent(e);
+
+    const activeElement = e.detail === 0 ? shadow.activeElement : null;
+    if (
+      activeElement === dockSwitch ||
+      isPointInsideElement(dockSwitch, e.clientX, e.clientY)
+    ) {
+      toggleGrabMode();
+      return;
+    }
+
+    const actionButton = menuButtons.find((button) =>
+      button.style.display !== "none" &&
+      (button === activeElement || isPointInsideElement(button, e.clientX, e.clientY))
+    );
+    if (actionButton) {
+      void runMenuAction(actionButton.dataset.action);
+      return;
+    }
+
+    if (activeElement === designSystemSubmitButton || isPointInsideElement(designSystemSubmitButton, e.clientX, e.clientY)) {
+      void runDesignSystemAction();
+      return;
+    }
+    if (activeElement === designSystemCancelButton || isPointInsideElement(designSystemCancelButton, e.clientX, e.clientY)) {
+      hideMenu();
+      return;
+    }
+    if (activeElement === designSystemInput || isPointInsideElement(designSystemInput, e.clientX, e.clientY)) {
+      designSystemInput.focus({ preventScroll: true });
     }
   }
 
@@ -2167,10 +2284,6 @@ Start by inspecting the current project and the two reference files, then create
     stopDockEvent(e);
   }
 
-  dockSwitch.addEventListener("pointerdown", onDockPointerDown);
-  dockSwitch.addEventListener("pointermove", onDockPointerMove);
-  dockSwitch.addEventListener("pointerup", finishDockDrag);
-  dockSwitch.addEventListener("pointercancel", finishDockDrag);
   dockSwitch.addEventListener("mouseenter", () => {
     if (!dockDrag) dockSwitch.style.transform = "scale(1.05)";
   });
@@ -2180,9 +2293,13 @@ Start by inspecting the current project and the two reference files, then create
 
   function attachListeners() {
     document.addEventListener("mousemove", onMouseMove, true);
-    document.addEventListener("click", onClick, true);
-    document.addEventListener("contextmenu", onContextMenu, true);
-    document.addEventListener("mousedown", onMouseDown, true);
+    window.addEventListener("click", onClick, true);
+    window.addEventListener("contextmenu", onContextMenu, true);
+    window.addEventListener("pointerdown", onPointerDown, true);
+    window.addEventListener("pointermove", onPointerMove, true);
+    window.addEventListener("pointerup", onPointerUp, true);
+    window.addEventListener("pointercancel", onPointerUp, true);
+    window.addEventListener("mousedown", onMouseDown, true);
     document.addEventListener("mouseup", onMouseUp, true);
     document.addEventListener("dragstart", onNativeDragStart, true);
     document.addEventListener("selectstart", onSelectStart, true);
@@ -2193,9 +2310,13 @@ Start by inspecting the current project and the two reference files, then create
 
   function detachListeners() {
     document.removeEventListener("mousemove", onMouseMove, true);
-    document.removeEventListener("click", onClick, true);
-    document.removeEventListener("contextmenu", onContextMenu, true);
-    document.removeEventListener("mousedown", onMouseDown, true);
+    window.removeEventListener("click", onClick, true);
+    window.removeEventListener("contextmenu", onContextMenu, true);
+    window.removeEventListener("pointerdown", onPointerDown, true);
+    window.removeEventListener("pointermove", onPointerMove, true);
+    window.removeEventListener("pointerup", onPointerUp, true);
+    window.removeEventListener("pointercancel", onPointerUp, true);
+    window.removeEventListener("mousedown", onMouseDown, true);
     document.removeEventListener("mouseup", onMouseUp, true);
     document.removeEventListener("dragstart", onNativeDragStart, true);
     document.removeEventListener("selectstart", onSelectStart, true);
@@ -2233,19 +2354,6 @@ Start by inspecting the current project and the two reference files, then create
     if (host.parentNode) host.parentNode.removeChild(host);
     delete window.__uiClonerGrab;
   }
-
-  dockSwitch.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-    if (suppressNextDockClick) {
-      suppressNextDockClick = false;
-      return;
-    }
-    const next = !enabled;
-    setEnabled(next);
-    void persistMode(next);
-  });
 
   if (chrome.runtime?.onMessage) {
     chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
